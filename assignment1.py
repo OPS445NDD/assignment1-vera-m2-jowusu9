@@ -3,8 +3,8 @@
 '''
 OPS445 Assignment 1
 Program: assignment1.py 
-Author: "Student Name"
-Semester: "Fall/Winter/Summer YYYY"
+Author: Jude Owusu
+Semester: "Summer 2026"
 
 The python code in this file (assignment1.py) is original work written by
 "Student Name". No code in this file is copied from any other source
@@ -90,11 +90,51 @@ def leap_year(year: int) -> bool:
 
 def valid_date(date: str) -> bool:
     "check validity of date and return True if valid"
-    ...
+   
+    try:
+        #Split the date to check year, month, day range
+        str_year, str_month, str_day = date.split('-')
+
+        #Ensuring the Year is 4 Digits
+        if len(str_year) != 4:
+            raise ValueError("Year must be 4 digits")
+
+        #convert to ints, rasies Valueerror if not a int
+        year = int(str_year)
+        month = int(str_month)
+        day = int(str_day)
+
+        #checks to see if month is in valid range
+        if month < 1 or month > 12:
+            raise ValueError("Please enter a valid month")
+        
+        #checks to see if day is valid by using mon_max function
+        if day < 1 or day > mon_max(month, year):
+            raise ValueError("Please enter a valid day")
+        
+        return True
+    
+    except ValueError:
+        return False
 
 def day_count(start_date: str, stop_date: str) -> int:
     "Loops through range of dates, and returns number of weekend days"
-    ...
+    
+    count = 0
+    current_date = start_date
+
+    while current_date <= stop_date:
+         #split current date into parts before calling day of week function
+        str_year, str_month, str_day = current_date.split('-')
+        year = int(str_year)
+        month = int(str_month)
+        day = int(str_day)
+
+        if day_of_week(year, month, day) in ['sat', 'sun']:
+            count += 1
+        current_date = after(current_date)
+
+    return count
 
 if __name__ == "__main__":
     ...
